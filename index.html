@@ -100,7 +100,7 @@
     </div>
 
     <script>
-        // Bank Account Data
+        // Bank Account Data with Extended Color Schemes
         const accountData = {
             scb: {
                 logo: "https://www.saijai.tech/wp-content/uploads/2022/10/scb-logo.png",
@@ -108,7 +108,14 @@
                 bank: "ไทยพาณิชย์",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
                 qr: "https://img2.pic.in.th/pic/.zip---7d31dffc26136578.png",
-                bgColor: "#663399"
+                bgColor: "#663399",
+                flexColors: {
+                    header: "#F0F4F7",
+                    headerText: "#663399",
+                    body: "#FFFFFF",
+                    footer: "#F0F4F7",
+                    separator: "#663399"
+                }
             },
             kbank: {
                 logo: "https://lh3.googleusercontent.com/d/1f_18KW8nyN1G96yC0MCwo1rMP88j_Poy",
@@ -116,7 +123,14 @@
                 bank: "กสิกรไทย",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
                 qr: "https://img2.pic.in.th/pic/.zip---.png",
-                bgColor: "#008C4A"
+                bgColor: "#008C4A",
+                flexColors: {
+                    header: "#E6F4EA",
+                    headerText: "#008C4A",
+                    body: "#FFFFFF",
+                    footer: "#E6F4EA",
+                    separator: "#008C4A"
+                }
             },
             tmb: {
                 logo: "https://lh3.googleusercontent.com/d/1Q6_GsTUWPYLikW0OAssAhyHnVzCRVUae",
@@ -124,7 +138,14 @@
                 bank: "ทหารไทย",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
                 qr: "https://via.placeholder.com/200?text=QR+TMB",
-                bgColor: "#0079C2"
+                bgColor: "#0079C2",
+                flexColors: {
+                    header: "#E3F2FD",
+                    headerText: "#0079C2",
+                    body: "#FFFFFF",
+                    footer: "#E3F2FD",
+                    separator: "#0079C2"
+                }
             },
             krungsri: {
                 logo: "https://lh3.googleusercontent.com/d/1_6V5fNHMJzxmkSnd7YcntZPdYobzhjR7",
@@ -132,7 +153,14 @@
                 bank: "กรุงศรีอยุธยา",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
                 qr: "https://via.placeholder.com/200?text=QR+Krungsri",
-                bgColor: "#F4AA00"
+                bgColor: "#F4AA00",
+                flexColors: {
+                    header: "#FFF3E0",
+                    headerText: "#F4AA00",
+                    body: "#FFFFFF",
+                    footer: "#FFF3E0",
+                    separator: "#F4AA00"
+                }
             }
         };
 
@@ -210,6 +238,7 @@
 
             const selectedBank = document.getElementById("bankSelector").value;
             const data = accountData[selectedBank];
+            const colors = data.flexColors;
 
             const flexMessage = {
                 type: "flex",
@@ -220,7 +249,7 @@
                     header: {
                         type: "box",
                         layout: "vertical",
-                        backgroundColor: "#F0F4F7",
+                        backgroundColor: colors.header,
                         paddingAll: "20px",
                         contents: [
                             {
@@ -228,7 +257,7 @@
                                 text: data.bank,
                                 weight: "bold",
                                 size: "xxl",
-                                color: "#1A73E8",
+                                color: colors.headerText,
                                 align: "center"
                             }
                         ]
@@ -244,7 +273,7 @@
                         type: "box",
                         layout: "vertical",
                         spacing: "md",
-                        backgroundColor: "#FFFFFF",
+                        backgroundColor: colors.body,
                         paddingAll: "20px",
                         contents: [
                             {
@@ -262,7 +291,7 @@
                                         type: "text",
                                         text: data.number,
                                         weight: "bold",
-                                        color: "#333333",
+                                        color: colors.headerText,
                                         align: "end",
                                         flex: 3
                                     }
@@ -270,7 +299,8 @@
                             },
                             {
                                 type: "separator",
-                                margin: "md"
+                                margin: "md",
+                                color: colors.separator
                             },
                             {
                                 type: "box",
@@ -287,7 +317,7 @@
                                         type: "text",
                                         text: data.holder,
                                         weight: "bold",
-                                        color: "#333333",
+                                        color: colors.headerText,
                                         align: "end",
                                         flex: 3
                                     }
@@ -298,7 +328,7 @@
                     footer: {
                         type: "box",
                         layout: "vertical",
-                        backgroundColor: "#F0F4F7",
+                        backgroundColor: colors.footer,
                         paddingAll: "12px",
                         contents: [
                             {
