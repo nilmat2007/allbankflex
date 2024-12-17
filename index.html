@@ -11,7 +11,7 @@
     <style>
         body {
             font-family: 'Prompt', sans-serif;
-            background: var(--bank-bg, #1a1a2e);
+            background: #008C4A; /* สีเริ่มต้นของกสิกรไทย */
             color: white;
             min-height: 100vh;
             display: flex;
@@ -163,7 +163,7 @@
             document.getElementById("qrCode").src = data.qr;
 
             // Change background color
-            document.body.style.setProperty('--bank-bg', data.bgColor);
+            document.body.style.setProperty('background', data.bgColor);
         });
 
         function copyText() {
