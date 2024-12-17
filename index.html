@@ -183,6 +183,91 @@
             });
         }
 
+        function shareToLine() {
+            const selectedBank = document.getElementById("bankSelector").value;
+            const data = accountData[selectedBank];
+
+            const flexMessage = {
+                type: "flex",
+                altText: "ข้อมูลบัญชีธนาคาร",
+                contents: {
+                    type: "bubble",
+                    hero: {
+                        type: "image",
+                        url: data.logo,
+                        size: "full",
+                        aspectRatio: "1:1",
+                        aspectMode: "cover"
+                    },
+                    body: {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [
+                            {
+                                type: "text",
+                                text: data.bank,
+                                weight: "bold",
+                                size: "xl",
+                                margin: "md",
+                                align: "center",
+                                color: "#333333"
+                            },
+                            {
+                                type: "text",
+                                text: "เลขบัญชี: " + data.number,
+                                margin: "sm",
+                                weight: "bold",
+                                size: "md",
+                                align: "center",
+                                color: "#008C4A"
+                            },
+                            {
+                                type: "text",
+                                text: "ชื่อบัญชี: " + data.holder,
+                                margin: "sm",
+                                size: "md",
+                                align: "center"
+                            }
+                        ]
+                    },
+                    footer: {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [
+                            {
+                                type: "button",
+                                style: "primary",
+                                color: "#008C4A",
+                                action: {
+                                    type: "uri",
+                                    label: "ดู QR Code",
+                                    uri: data.qr // ลิงก์ QR Code
+                                }
+                            }
+                        ]
+                    }
+                }
+            };
+
+            liff.shareTargetPicker([flexMessage])
+                .then(() => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "แชร์สำเร็จ",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                })
+                .catch((error) => {
+                    console.error("การแชร์ล้มเหลว: ", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "การแชร์ล้มเหลว",
+                        text: "ไม่สามารถแชร์ข้อความได้"
+                    });
+                });
+        }
+
         window.onload = initializeLiff;
     </script>
 </body>
