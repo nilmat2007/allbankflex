@@ -1,60 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>แชร์บัญชีธนาคาร LINE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แชร์บัญชีธนาคาร</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        :root {
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --accent-color: #0f3460;
+            --text-color: #e9e9e9;
+        }
         body {
-            font-family: 'Mitr', sans-serif;
-            background: #000;
+            font-family: 'Prompt', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container {
-            max-width: 600px;
-        }
-        .account-info {
-            color: white;
+        .bank-container {
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             padding: 30px;
-            border-radius: 20px;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
+            max-width: 450px;
+            width: 100%;
+        }
+        .bank-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        #bankSelector {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            margin-bottom: 20px;
+        }
+        .account-details {
+            background-color: var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .qr-code {
+            max-width: 200px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .btn-custom {
+            background-color: #0f3460;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #16213e;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col align-middle text-center col-md-5 textbox">
-                <div class="m-1">
-                    <i class="fas fa-exclamation-circle text-warning"></i>
-                    <span class="text-warning">&emsp; เลขบัญชีใช้ในการโอนเงิน</span>
-                </div>
-            </div>
+    <div class="container bank-container">
+        <div class="text-center mb-4">
+            <img id="bankLogo" src="https://lh3.googleusercontent.com/d/1f_18KW8nyN1G96yC0MCwo1rMP88j_Poy" alt="Bank Logo" class="bank-logo">
+            <select id="bankSelector" class="form-select">
+                <option value="kbank" selected>กสิกรไทย</option>
+                <option value="scb">ไทยพาณิชย์</option>
+                <option value="tmb">ทหารไทย</option>
+                <option value="krungsri">กรุงศรีอยุธยา</option>
+            </select>
         </div>
 
-        <select id="bankSelector" class="form-select">
-            <option value="kbank" selected>กสิกรไทย</option>
-            <option value="scb">ไทยพาณิชย์</option>
-            <option value="tmb">ทหารไทย</option>
-            <option value="krungsri">กรุงศรีอยุธยา</option>
-        </select>
-
-        <div id="accountInfo" class="account-info" style="background-color: #008C4A;">
-            <div class="details">
-                <img id="bankLogo" src="https://lh3.googleusercontent.com/d/1f_18KW8nyN1G96yC0MCwo1rMP88j_Poy" alt="Bank Logo" style="border-radius: 50%; height: 50px; width: 50px;">
-                <div>
-                    <p id="accountNumber">เลขบัญชี 130-2-93580-3</p>
-                    <p id="bankName">ธนาคาร : กสิกรไทย</p>
-                    <p id="accountHolder">ชื่อ: ภีมฑพัฒน์ นิลมาตย์</p>
-                </div>
-            </div>
-            <img id="qrCode" class="qr-code" src="https://img2.pic.in.th/pic/.zip---.png" alt="QR Code" style="max-width: 200px;">
-            <br>
-            <div class="d-flex justify-content-center gap-2">
-                <button onclick="copyText()" class="btn btn-secondary">คัดลอก</button>
-                <button onclick="shareToLine()" class="btn btn-success">แชร์ LINE</button>
+        <div id="accountInfo" class="account-details">
+            <p id="accountNumber" class="h4 mb-2">เลขบัญชี 130-2-93580-3</p>
+            <p id="bankName" class="mb-2">ธนาคาร : กสิกรไทย</p>
+            <p id="accountHolder" class="mb-3">ชื่อ: ภีมฑพัฒน์ นิลมาตย์</p>
+            
+            <img id="qrCode" src="https://img2.pic.in.th/pic/.zip---.png" alt="QR Code" class="qr-code">
+            
+            <div class="d-flex justify-content-center gap-3">
+                <button onclick="copyText()" class="btn btn-custom">คัดลอก</button>
+                <button onclick="shareToLine()" class="btn btn-custom">แชร์ LINE</button>
             </div>
         </div>
     </div>
@@ -66,7 +100,6 @@
                 number: "156-275071-5",
                 bank: "ไทยพาณิชย์",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
-                color: "#663399",
                 qr: "https://img2.pic.in.th/pic/.zip---7d31dffc26136578.png"
             },
             kbank: {
@@ -74,7 +107,6 @@
                 number: "130-2-93580-3",
                 bank: "กสิกรไทย",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
-                color: "#008C4A",
                 qr: "https://img2.pic.in.th/pic/.zip---.png"
             },
             tmb: {
@@ -82,7 +114,6 @@
                 number: "003-707982-9",
                 bank: "ทหารไทย",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
-                color: "#0079C2",
                 qr: "https://via.placeholder.com/200?text=QR+TMB"
             },
             krungsri: {
@@ -90,20 +121,25 @@
                 number: "775-1-16804-7",
                 bank: "กรุงศรีอยุธยา",
                 holder: "ภีมฑพัฒน์ นิลมาตย์",
-                color: "#F4AA00",
                 qr: "https://via.placeholder.com/200?text=QR+Krungsri"
             }
         };
 
-        // LINE LIFF Initialization
         async function initializeLiff() {
-            await liff.init({ liffId: "2005615503-gaGNRZQp" });
-            if (!liff.isLoggedIn()) {
-                liff.login();
+            try {
+                await liff.init({ liffId: "2005615503-gaGNRZQp" });
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+            } catch (error) {
+                Swal2.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'ไม่สามารถเชื่อมต่อ LINE LIFF ได้'
+                });
             }
         }
 
-        // Share to LINE Function
         async function shareToLine() {
             const selectedBank = document.getElementById("bankSelector").value;
             const bankInfo = accountData[selectedBank];
@@ -182,7 +218,6 @@
             }
         }
 
-        // Event Listeners
         document.getElementById("bankSelector").addEventListener("change", function () {
             const selectedBank = this.value;
             const data = accountData[selectedBank];
@@ -192,13 +227,12 @@
             document.getElementById("bankName").innerText = "ธนาคาร : " + data.bank;
             document.getElementById("accountHolder").innerText = "ชื่อ: " + data.holder;
             document.getElementById("qrCode").src = data.qr;
-            document.getElementById("accountInfo").style.backgroundColor = data.color;
         });
 
         function copyText() {
             const textToCopy = document.getElementById("accountNumber").innerText;
             navigator.clipboard.writeText(textToCopy).then(() => {
-                Swal2.fire({
+                Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: "success",
@@ -212,7 +246,6 @@
             });
         }
 
-        // Initialize LIFF when the page loads
         window.onload = initializeLiff;
     </script>
 </body>
