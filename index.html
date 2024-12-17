@@ -194,7 +194,7 @@
                     type: "bubble",
                     hero: {
                         type: "image",
-                        url: data.logo,
+                        url: data.qr, // ใช้ QR Code เป็นภาพ
                         size: "full",
                         aspectRatio: "1:1",
                         aspectMode: "cover"
@@ -227,22 +227,6 @@
                                 margin: "sm",
                                 size: "md",
                                 align: "center"
-                            }
-                        ]
-                    },
-                    footer: {
-                        type: "box",
-                        layout: "vertical",
-                        contents: [
-                            {
-                                type: "button",
-                                style: "primary",
-                                color: "#008C4A",
-                                action: {
-                                    type: "uri",
-                                    label: "ดู QR Code",
-                                    uri: data.qr // ลิงก์ QR Code
-                                }
                             }
                         ]
                     }
