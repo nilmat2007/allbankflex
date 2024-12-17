@@ -188,50 +188,110 @@
             const data = accountData[selectedBank];
 
             const flexMessage = {
-                type: "flex",
-                altText: "ข้อมูลบัญชีธนาคาร",
-                contents: {
-                    type: "bubble",
-                    hero: {
-                        type: "image",
-                        url: data.qr, // ใช้ QR Code เป็นภาพ
-                        size: "full",
-                        aspectRatio: "1:1",
-                        aspectMode: "cover"
-                    },
-                    body: {
-                        type: "box",
-                        layout: "vertical",
-                        contents: [
-                            {
-                                type: "text",
-                                text: data.bank,
-                                weight: "bold",
-                                size: "xl",
-                                margin: "md",
-                                align: "center",
-                                color: "#333333"
-                            },
-                            {
-                                type: "text",
-                                text: "เลขบัญชี: " + data.number,
-                                margin: "sm",
-                                weight: "bold",
-                                size: "md",
-                                align: "center",
-                                color: "#008C4A"
-                            },
-                            {
-                                type: "text",
-                                text: "ชื่อบัญชี: " + data.holder,
-                                margin: "sm",
-                                size: "md",
-                                align: "center"
-                            }
-                        ]
-                    }
+    type: "flex",
+    altText: "ข้อมูลบัญชีธนาคาร",
+    contents: {
+        type: "bubble",
+        size: "giga",
+        header: {
+            type: "box",
+            layout: "vertical",
+            backgroundColor: "#F0F4F7",
+            paddingAll: "20px",
+            contents: [
+                {
+                    type: "text",
+                    text: data.bank,
+                    weight: "bold",
+                    size: "xxl",
+                    color: "#1A73E8",
+                    align: "center"
                 }
-            };
+            ]
+        },
+        hero: {
+            type: "image",
+            url: data.qr,
+            size: "full",
+            aspectRatio: "1:1",
+            aspectMode: "cover",
+            action: {
+                type: "uri",
+                uri: data.qrLink || "" // เพิ่มลิงก์สำหรับ QR Code
+            }
+        },
+        body: {
+            type: "box",
+            layout: "vertical",
+            spacing: "md",
+            backgroundColor: "#FFFFFF",
+            paddingAll: "20px",
+            contents: [
+                {
+                    type: "box",
+                    layout: "horizontal",
+                    contents: [
+                        {
+                            type: "text",
+                            text: "เลขบัญชี",
+                            color: "#8C8C8C",
+                            size: "sm",
+                            flex: 2
+                        },
+                        {
+                            type: "text",
+                            text: data.number,
+                            weight: "bold",
+                            color: "#333333",
+                            align: "end",
+                            flex: 3
+                        }
+                    ]
+                },
+                {
+                    type: "separator",
+                    margin: "md"
+                },
+                {
+                    type: "box",
+                    layout: "horizontal",
+                    contents: [
+                        {
+                            type: "text",
+                            text: "ชื่อบัญชี",
+                            color: "#8C8C8C",
+                            size: "sm",
+                            flex: 2
+                        },
+                        {
+                            type: "text",
+                            text: data.holder,
+                            weight: "bold",
+                            color: "#333333",
+                            align: "end",
+                            flex: 3
+                        }
+                    ]
+                }
+            ]
+        },
+        footer: {
+            type: "box",
+            layout: "vertical",
+            backgroundColor: "#F0F4F7",
+            paddingAll: "12px",
+            contents: [
+                {
+                    type: "text",
+                    text: "อัปเดตล่าสุด: " + new Date().toLocaleDateString('th-TH'),
+                    color: "#8C8C8C",
+                    size: "xs",
+                    align: "center"
+                }
+            ]
+        }
+    }
+};
 
             liff.shareTargetPicker([flexMessage])
                 .then(() => {
