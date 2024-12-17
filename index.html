@@ -101,286 +101,302 @@
 
     <script>
         // Bank Account Data with Extended Color Schemes
-        const accountData = {
-            scb: {
-                logo: "https://www.saijai.tech/wp-content/uploads/2022/10/scb-logo.png",
-                number: "156-275071-5",
-                bank: "ไทยพาณิชย์",
-                holder: "ภีมฑพัฒน์ นิลมาตย์",
-                qr: "https://img2.pic.in.th/pic/.zip---7d31dffc26136578.png",
-                bgColor: "#663399",
-                flexColors: {
-                    header: "#F0F4F7",
-                    headerText: "#663399",
-                    body: "#FFFFFF",
-                    footer: "#F0F4F7",
-                    separator: "#663399"
-                }
-            },
-            kbank: {
-                logo: "https://lh3.googleusercontent.com/d/1f_18KW8nyN1G96yC0MCwo1rMP88j_Poy",
-                number: "130-2-93580-3",
-                bank: "กสิกรไทย",
-                holder: "ภีมฑพัฒน์ นิลมาตย์",
-                qr: "https://img2.pic.in.th/pic/.zip---.png",
-                bgColor: "#008C4A",
-                flexColors: {
-                    header: "#E6F4EA",
-                    headerText: "#008C4A",
-                    body: "#FFFFFF",
-                    footer: "#E6F4EA",
-                    separator: "#008C4A"
-                }
-            },
-            tmb: {
-                logo: "https://lh3.googleusercontent.com/d/1Q6_GsTUWPYLikW0OAssAhyHnVzCRVUae",
-                number: "003-707982-9",
-                bank: "ทหารไทย",
-                holder: "ภีมฑพัฒน์ นิลมาตย์",
-                qr: "https://img2.pic.in.th/pic/Untitled-design913afd0651d25fe3.png",
-                bgColor: "#0079C2",
-                flexColors: {
-                    header: "#E3F2FD",
-                    headerText: "#0079C2",
-                    body: "#FFFFFF",
-                    footer: "#E3F2FD",
-                    separator: "#0079C2"
-                }
-            },
-            krungsri: {
-                logo: "https://lh3.googleusercontent.com/d/1_6V5fNHMJzxmkSnd7YcntZPdYobzhjR7",
-                number: "775-1-16804-7",
-                bank: "กรุงศรีอยุธยา",
-                holder: "ภีมฑพัฒน์ นิลมาตย์",
-                qr: "https://via.placeholder.com/200?text=QR+Krungsri",
-                bgColor: "#F4AA00",
-                flexColors: {
-                    header: "#FFF3E0",
-                    headerText: "#F4AA00",
-                    body: "#FFFFFF",
-                    footer: "#FFF3E0",
-                    separator: "#F4AA00"
-                }
-            }
-        };
-
-        // LIFF Initialization
-        const LIFF_ID = "2005615503-gaGNRZQp";
-        let isLiffInitialized = false;
-
-        async function initializeLiff() {
-            try {
-                await liff.init({ liffId: LIFF_ID });
-                isLiffInitialized = true;
-                
-                // Automatically login if not logged in
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                    return false;
-                }
-                return true;
-            } catch (error) {
-                console.error("LIFF Initialization Error:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด',
-                    text: 'ไม่สามารถเชื่อมต่อ LINE LIFF กรุณาลองใหม่อีกครั้ง',
-                    confirmButtonText: 'ลองใหม่'
-                });
-                return false;
-            }
+const accountData = {
+    scb: {
+        logo: "https://www.saijai.tech/wp-content/uploads/2022/10/scb-logo.png",
+        number: "156-275071-5",
+        bank: "ไทยพาณิชย์",
+        holder: "ภีมฑพัฒน์ นิลมาตย์",
+        qr: "https://img2.pic.in.th/pic/.zip---7d31dffc26136578.png",
+        bgColor: "#663399",
+        flexColors: {
+            header: "#F0F4F7",
+            headerText: "#663399",
+            body: "#FFFFFF",
+            footer: "#F0F4F7",
+            separator: "#663399"
         }
-
-        // Bank Selector Change Event
-        function updateBankDetails(selectedBank) {
-            const data = accountData[selectedBank];
-
-            // Update visual elements
-            document.getElementById("bankLogo").src = data.logo;
-            document.getElementById("accountNumber").innerText = "เลขบัญชี " + data.number;
-            document.getElementById("bankName").innerText = "ธนาคาร : " + data.bank;
-            document.getElementById("accountHolder").innerText = "ชื่อ: " + data.holder;
-            document.getElementById("qrCode").src = data.qr;
-
-            // Change background color
-            document.body.style.setProperty('background', data.bgColor);
+    },
+    kbank: {
+        logo: "https://lh3.googleusercontent.com/d/1f_18KW8nyN1G96yC0MCwo1rMP88j_Poy",
+        number: "130-2-93580-3",
+        bank: "กสิกรไทย",
+        holder: "ภีมฑพัฒน์ นิลมาตย์",
+        qr: "https://img2.pic.in.th/pic/.zip---.png",
+        bgColor: "#008C4A",
+        flexColors: {
+            header: "#E6F4EA",
+            headerText: "#008C4A",
+            body: "#FFFFFF",
+            footer: "#E6F4EA",
+            separator: "#008C4A"
         }
-
-        // Copy Account Number
-        function copyAccountNumber() {
-            const textToCopy = document.getElementById("accountNumber").innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                Swal.fire({
-                    toast: true,
-                    position: "top-end",
-                    icon: "success",
-                    title: "คัดลอกสำเร็จ",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
-            }).catch((error) => {
-                console.error("Could not copy text: ", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด',
-                    text: 'ไม่สามารถคัดลอกข้อความได้'
-                });
-            });
+    },
+    tmb: {
+        logo: "https://lh3.googleusercontent.com/d/1Q6_GsTUWPYLikW0OAssAhyHnVzCRVUae",
+        number: "003-707982-9",
+        bank: "ทหารไทย",
+        holder: "ภีมฑพัฒน์ นิลมาตย์",
+        qr: "https://img2.pic.in.th/pic/Untitled-design913afd0651d25fe3.png",
+        bgColor: "#0079C2",
+        flexColors: {
+            header: "#E3F2FD",
+            headerText: "#0079C2",
+            body: "#FFFFFF",
+            footer: "#E3F2FD",
+            separator: "#0079C2"
         }
+    },
+    krungsri: {
+        logo: "https://lh3.googleusercontent.com/d/1_6V5fNHMJzxmkSnd7YcntZPdYobzhjR7",
+        number: "775-1-16804-7",
+        bank: "กรุงศรีอยุธยา",
+        holder: "ภีมฑพัฒน์ นิลมาตย์",
+        qr: "https://via.placeholder.com/200?text=QR+Krungsri",
+        bgColor: "#F4AA00",
+        flexColors: {
+            header: "#FFF3E0",
+            headerText: "#F4AA00",
+            body: "#FFFFFF",
+            footer: "#FFF3E0",
+            separator: "#F4AA00"
+        }
+    }
+};
 
-        // Share to LINE
-        async function shareToLine() {
-            if (!isLiffInitialized) {
-                await initializeLiff();
-                if (!isLiffInitialized) return;
-            }
+// LIFF Initialization
+const LIFF_ID = "2005615503-gaGNRZQp";
+let isLiffInitialized = false;
 
-            const selectedBank = document.getElementById("bankSelector").value;
-            const data = accountData[selectedBank];
-            const colors = data.flexColors;
+async function initializeLiff() {
+    try {
+        await liff.init({ liffId: LIFF_ID });
+        isLiffInitialized = true;
+        
+        // Automatically login if not logged in
+        if (!liff.isLoggedIn()) {
+            liff.login();
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error("LIFF Initialization Error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: 'ไม่สามารถเชื่อมต่อ LINE LIFF กรุณาลองใหม่อีกครั้ง',
+            confirmButtonText: 'ลองใหม่'
+        });
+        return false;
+    }
+}
 
-            const flexMessage = {
-                type: "flex",
-                altText: "ข้อมูลบัญชีธนาคาร",
-                contents: {
-                    type: "bubble",
-                    size: "giga",
-                    header: {
+// Bank Selector Change Event
+function updateBankDetails(selectedBank) {
+    const data = accountData[selectedBank];
+
+    // Update visual elements
+    document.getElementById("bankLogo").src = data.logo;
+    document.getElementById("accountNumber").innerText = "เลขบัญชี " + data.number;
+    document.getElementById("bankName").innerText = "ธนาคาร : " + data.bank;
+    document.getElementById("accountHolder").innerText = "ชื่อ: " + data.holder;
+    document.getElementById("qrCode").src = data.qr;
+
+    // Change background color
+    document.body.style.setProperty('background', data.bgColor);
+}
+
+// Copy Account Number
+function copyAccountNumber() {
+    const textToCopy = document.getElementById("accountNumber").innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: "คัดลอกสำเร็จ",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    }).catch((error) => {
+        console.error("Could not copy text: ", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: 'ไม่สามารถคัดลอกข้อความได้'
+        });
+    });
+}
+
+// Share to LINE
+async function shareToLine() {
+    if (!isLiffInitialized) {
+        await initializeLiff();
+        if (!isLiffInitialized) return;
+    }
+
+    const selectedBank = document.getElementById("bankSelector").value;
+    const data = accountData[selectedBank];
+    const colors = data.flexColors;
+
+    const flexMessage = {
+        type: "flex",
+        altText: "ข้อมูลบัญชีธนาคาร",
+        contents: {
+            type: "bubble",
+            size: "giga",
+            header: {
+                type: "box",
+                layout: "vertical",
+                backgroundColor: colors.header,
+                paddingAll: "20px",
+                contents: [
+                    {
                         type: "box",
                         layout: "vertical",
-                        backgroundColor: colors.header,
-                        paddingAll: "20px",
                         contents: [
+                            {
+                                type: "image",
+                                url: data.logo,
+                                size: "xs",
+                                aspectRatio: "1:1",
+                                aspectMode: "cover",
+                                align: "center",
+                                margin: "md"
+                            },
                             {
                                 type: "text",
                                 text: data.bank,
                                 weight: "bold",
                                 size: "xxl",
                                 color: colors.headerText,
-                                align: "center"
-                            }
-                        ]
-                    },
-                    hero: {
-                        type: "image",
-                        url: data.qr,
-                        size: "full",
-                        aspectRatio: "1:1",
-                        aspectMode: "cover"
-                    },
-                    body: {
-                        type: "box",
-                        layout: "vertical",
-                        spacing: "md",
-                        backgroundColor: colors.body,
-                        paddingAll: "20px",
-                        contents: [
-                            {
-                                type: "box",
-                                layout: "horizontal",
-                                contents: [
-                                    {
-                                        type: "text",
-                                        text: "เลขบัญชี",
-                                        color: "#8C8C8C",
-                                        size: "sm",
-                                        flex: 2
-                                    },
-                                    {
-                                        type: "text",
-                                        text: data.number,
-                                        weight: "bold",
-                                        color: colors.headerText,
-                                        align: "end",
-                                        flex: 3
-                                    }
-                                ]
-                            },
-                            {
-                                type: "separator",
-                                margin: "md",
-                                color: colors.separator
-                            },
-                            {
-                                type: "box",
-                                layout: "horizontal",
-                                contents: [
-                                    {
-                                        type: "text",
-                                        text: "ชื่อบัญชี",
-                                        color: "#8C8C8C",
-                                        size: "sm",
-                                        flex: 2
-                                    },
-                                    {
-                                        type: "text",
-                                        text: data.holder,
-                                        weight: "bold",
-                                        color: colors.headerText,
-                                        align: "end",
-                                        flex: 3
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    footer: {
-                        type: "box",
-                        layout: "vertical",
-                        backgroundColor: colors.footer,
-                        paddingAll: "12px",
-                        contents: [
-                            {
-                                type: "text",
-                                text: "อัปเดตล่าสุด: " + new Date().toLocaleDateString('th-TH'),
-                                color: "#8C8C8C",
-                                size: "xs",
-                                align: "center"
+                                align: "center",
+                                margin: "md"
                             }
                         ]
                     }
-                }
-            };
-
-            try {
-                const result = await liff.shareTargetPicker([flexMessage]);
-                if (result) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "แชร์สำเร็จ",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "info",
-                        title: "ยกเลิกการแชร์",
-                        text: "คุณได้ยกเลิกการแชร์"
-                    });
-                }
-            } catch (error) {
-                console.error("การแชร์ล้มเหลว: ", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "การแชร์ล้มเหลว",
-                    text: "ไม่สามารถแชร์ข้อความได้"
-                });
+                ]
+            },
+            hero: {
+                type: "image",
+                url: data.qr,
+                size: "full",
+                aspectRatio: "1:1",
+                aspectMode: "cover"
+            },
+            body: {
+                type: "box",
+                layout: "vertical",
+                spacing: "md",
+                backgroundColor: colors.body,
+                paddingAll: "20px",
+                contents: [
+                    {
+                        type: "box",
+                        layout: "horizontal",
+                        contents: [
+                            {
+                                type: "text",
+                                text: "เลขบัญชี",
+                                color: "#8C8C8C",
+                                size: "sm",
+                                flex: 2
+                            },
+                            {
+                                type: "text",
+                                text: data.number,
+                                weight: "bold",
+                                color: colors.headerText,
+                                align: "end",
+                                flex: 3
+                            }
+                        ]
+                    },
+                    {
+                        type: "separator",
+                        margin: "md",
+                        color: colors.separator
+                    },
+                    {
+                        type: "box",
+                        layout: "horizontal",
+                        contents: [
+                            {
+                                type: "text",
+                                text: "ชื่อบัญชี",
+                                color: "#8C8C8C",
+                                size: "sm",
+                                flex: 2
+                            },
+                            {
+                                type: "text",
+                                text: data.holder,
+                                weight: "bold",
+                                color: colors.headerText,
+                                align: "end",
+                                flex: 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            footer: {
+                type: "box",
+                layout: "vertical",
+                backgroundColor: colors.footer,
+                paddingAll: "12px",
+                contents: [
+                    {
+                        type: "text",
+                        text: "อัปเดตล่าสุด: " + new Date().toLocaleDateString('th-TH'),
+                        color: "#8C8C8C",
+                        size: "xs",
+                        align: "center"
+                    }
+                ]
             }
         }
+    };
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById("bankSelector").addEventListener("change", function () {
-                updateBankDetails(this.value);
+    try {
+        const result = await liff.shareTargetPicker([flexMessage]);
+        if (result) {
+            Swal.fire({
+                icon: "success",
+                title: "แชร์สำเร็จ",
+                showConfirmButton: false,
+                timer: 2000
             });
-
-            document.getElementById("copyBtn").addEventListener("click", copyAccountNumber);
-            document.getElementById("shareBtn").addEventListener("click", shareToLine);
-
-            // Initialize LIFF on page load
-            initializeLiff();
+        } else {
+            Swal.fire({
+                icon: "info",
+                title: "ยกเลิกการแชร์",
+                text: "คุณได้ยกเลิกการแชร์"
+            });
+        }
+    } catch (error) {
+        console.error("การแชร์ล้มเหลว: ", error);
+        Swal.fire({
+            icon: "error",
+            title: "การแชร์ล้มเหลว",
+            text: "ไม่สามารถแชร์ข้อความได้"
         });
+    }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("bankSelector").addEventListener("change", function () {
+        updateBankDetails(this.value);
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", copyAccountNumber);
+    document.getElementById("shareBtn").addEventListener("click", shareToLine);
+
+    // Initialize LIFF on page load
+    initializeLiff();
+});
     </script>
 </body>
 </html>
