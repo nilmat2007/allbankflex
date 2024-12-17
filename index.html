@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -257,12 +257,15 @@ async function shareToLine() {
                         layout: "vertical",
                         contents: [
                             {
-                type: "image",
-                url: data.qr,
-                size: "full",
-                aspectRatio: "1:1",
-                aspectMode: "cover"
-            },
+    type: "image",
+    url: data.logo,
+    size: "xs",
+    aspectRatio: "1:1",
+    aspectMode: "cover",
+    gravity: "center",
+    align: "center",
+    margin: "md"
+},
                             {
                                 type: "text",
                                 text: data.bank,
