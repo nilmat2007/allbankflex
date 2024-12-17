@@ -257,14 +257,15 @@ async function shareToLine() {
                         layout: "vertical",
                         contents: [
                             {
-                                type: "image",
-                                url: data.logo,
-                                size: "xs",
-                                aspectRatio: "1:1",
-                                aspectMode: "cover",
-                                align: "center",
-                                margin: "md"
-                            },
+    type: "image",
+    url: data.logo,
+    size: "xs",
+    aspectRatio: "1:1",
+    aspectMode: "cover",
+    gravity: "center",
+    align: "center",
+    margin: "md"
+},
                             {
                                 type: "text",
                                 text: data.bank,
